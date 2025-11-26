@@ -1,0 +1,20 @@
+[Unit]
+Description=McGuire Technology API
+After=network.target
+
+[Service]
+Type=notify
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/mcguire-api
+Environment="PATH=/var/www/mcguire-api/.venv/bin"
+ExecStart=/var/www/mcguire-api/.venv/bin/uvicorn api.main:app --host 0.0.0.0 --port 8000 --workers 4
+ExecReload=/bin/kill -s HUP $MAINPID
+KillMode=mixed
+TimeoutStopSec=5
+PrivateTmp=true
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
