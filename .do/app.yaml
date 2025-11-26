@@ -6,9 +6,7 @@ services:
       repo: McGuireTechnology/API
       branch: main
       deploy_on_push: true
-    source_dir: /
-    run_command: uvicorn api.main:app --host 0.0.0.0 --port 8080
-    environment_slug: python
+    dockerfile_path: Dockerfile
     instance_count: 1
     instance_size_slug: basic-xxs
     http_port: 8080
