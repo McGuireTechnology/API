@@ -7,8 +7,7 @@ services:
       branch: main
       deploy_on_push: true
     source_dir: /
-    build_command: pip install poetry && poetry install --only main
-    run_command: poetry run uvicorn api.main:app --host 0.0.0.0 --port 8080
+    run_command: uvicorn api.main:app --host 0.0.0.0 --port 8080
     environment_slug: python
     instance_count: 1
     instance_size_slug: basic-xxs
