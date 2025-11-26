@@ -1,20 +1,20 @@
 # Build stage
 FROM python:3.11-slim as builder
 
-# Install Poetry
-RUN pip install --no-cache-dir poetry==1.8.3
-
 # Set working directory
 WORKDIR /app
 
-# Copy dependency files
-COPY pyproject.toml poetry.lock ./
+# Copy dependency files first (for better caching)
+COPY pyproject.toml ./
+
+# Install Poetry
+RUN pip install --no-cache-dir poetry==1.8.3
 
 # Configure Poetry to not create virtual environment
 RUN poetry config virtualenvs.create false
 
-# Install dependencies
-RUN poetry install --only main --no-interaction --no-ansi
+# Install dependencies (Poetry will create lock file if missing)
+RUN poetry install --only main --no-interaction --no-ansi --no-root
 
 # Runtime stage
 FROM python:3.11-slim
